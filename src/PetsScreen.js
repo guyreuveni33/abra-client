@@ -2,17 +2,20 @@ import './App.css';
 import {useState} from "react";
 import {HexColorPicker, HexColorInput} from "react-colorful";
 import {addPet} from "./services/petService";
-import ReactLoading from 'react-loading';
+import {Link} from "@chakra-ui/react"; // Ensure your custom styles are applied
+import { useNavigate } from 'react-router-dom';
 
-function App() {
+function PetsScreen() {
     const [petName, setPetName] = useState('');
     const [petAge, setPetAge] = useState('');
     const [selectedType, setSelectedType] = useState('Cat');
     const petTypes = ["Dog", "Cat", "horse", "Other"]; // Example colors
     const [color, setColor] = useState("#aabbcc");
     const [loading, setLoading] = useState(false); // Track loading state
-
-
+    const navigate = useNavigate();
+    const handleNoAccount = () => {
+        navigate('/AllPetsView');
+    }
     const handleAddPet = async () => {
         if (petName.trim() !== "") {
             setLoading(true);
@@ -45,9 +48,18 @@ function App() {
     function myAlertFailed() {
         alert("Your pet is being uploaded!")
     }
+    // function handlePetsButton(){
+    //     setNavigate('/AllPetsView');
+    // }
+
 
     return (
         <div className="form-container">
+            <button>
+
+            <Link onClick={handleNoAccount} cursor="pointer" to="/AllPetsView" className="link">Pets</Link>
+            </button>
+
             <form>
                 <div>
                     <label>
@@ -97,7 +109,7 @@ function App() {
                 </div>
                 <div>
 
-                    <button type="submit" onClick={handleAddPet}>Submit</button>
+
 
                 </div>
 
@@ -107,4 +119,4 @@ function App() {
     );
 }
 
-export default App;
+export default PetsScreen;
